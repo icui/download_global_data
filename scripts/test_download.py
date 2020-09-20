@@ -1,5 +1,8 @@
 import os
 import obspy
+from pyasdf import ASDFDataSet
+from pypers import Space
+from obspy import read
 from scripts.download_util import download_event
 
 
@@ -21,5 +24,12 @@ if __name__ == "__main__":
     basedir = "./test_data_repo"
     waveform_base = os.path.join(basedir, "waveform")
     station_base = os.path.join(basedir, "station")
+    asdf_base = os.path.join(basedir, "asdf")
 
     download_event(eventname, event, params, waveform_base, station_base)
+    ws = Space(waveform_base)
+
+    with ASDFDataSet(os.path.join(asdf_base, event + '.raw_obs.h5'), mode='w', mpi=False, compression=None) as ds:
+        for wav in ws.ls():
+            st = read(wav)
+            ds.add_waveforms(st)
