@@ -38,7 +38,7 @@ if __name__ == "__main__":
     from mpi4py import MPI
     from pypers import Space
 
-    rank = MPI.Comm.Get_rank()
+    rank = MPI.COMM_WORLD.Get_rank()
     events = Space('CMT/CMT.190').ls()
     print(len(events), rank)
     # download_convert(events[rank])
