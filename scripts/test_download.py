@@ -40,6 +40,5 @@ if __name__ == "__main__":
 
     rank = MPI.COMM_WORLD.Get_rank()
     events = Space('CMT/CMT.190').ls()
-    print(len(events), rank)
-    # download_convert(events[rank])
+    download_convert(events[rank])
     
