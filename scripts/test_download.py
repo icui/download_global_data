@@ -3,7 +3,7 @@ import obspy
 from pyasdf import ASDFDataSet
 from pypers import Space
 from obspy import read
-from .download_util import download_event
+from download_util import download_event
 
 
 if __name__ == "__main__":
