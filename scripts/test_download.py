@@ -24,7 +24,7 @@ def download_convert(eventname):
     params = {
         "starttime_offset": -600,
         "endtime_offset": 11000,
-        "networks": networks,
+        "networks": list(networks),
         "channels": None,
         "location_priorities": ["", "00", "10"],
         "channel_priorities": ["BH[ZNE]", "HH[ZNE]"],
