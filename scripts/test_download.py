@@ -1,11 +1,11 @@
 import os
 import obspy
-from download_util import download_event
+from scripts.download_util import download_event
 
 
 if __name__ == "__main__":
     eventname = "C201105192015A"
-    eventfile = os.path.join("../CMT/CMT.190", eventname)
+    eventfile = os.path.join("CMT/CMT.190", eventname)
     event = obspy.read_events(eventfile)[0]
 
     params = {
