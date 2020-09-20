@@ -35,5 +35,10 @@ def download_convert(eventname):
     convert_event(eventname, stations, waveform_base, asdf_base)
 
 if __name__ == "__main__":
-    download_convert("C201105192015A")
+    from mpi4py import MPI
+    from pypers import Space
+    
+    rank = MPI.Comm.Get_rank()
+    events = Space('CMT/CMT.190').ls()
+    download_convert(events[rank])
     
