@@ -3,8 +3,7 @@ import obspy
 from download_util import download_event, convert_event
 
 
-if __name__ == "__main__":
-    eventname = "C201105192015A"
+def download_convert(eventname):
     eventfile = os.path.join("CMT/CMT.190", eventname)
     event = obspy.read_events(eventfile)[0]
 
@@ -23,5 +22,9 @@ if __name__ == "__main__":
     station_base = os.path.join(basedir, "station")
     asdf_base = os.path.join(basedir, "asdf")
 
-    # download_event(eventname, event, params, waveform_base, station_base)
+    download_event(eventname, event, params, waveform_base, station_base)
     convert_event(eventname, waveform_base, asdf_base)
+
+if __name__ == "__main__":
+    download_convert("C201105192015A")
+    
