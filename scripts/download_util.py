@@ -123,4 +123,4 @@ def convert_event(eventname, waveform_base, asdf_base):
 
     with ASDFDataSet(os.path.join(asdf_base, eventname + '.raw_obs.h5'), mode='w', mpi=False, compression=None) as ds:
         for wav in ws.ls():
-            ds.add_waveforms(read(ws[wav]))
+            ds.add_waveforms(read(ws[wav]), 'raw_obs')
