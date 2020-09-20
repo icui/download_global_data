@@ -110,3 +110,17 @@ def download_event(eventname, event, params,
         location_priorities=params["location_priorities"],
         channel_priorities=params["channel_priorities"],
         providers=params["providers"])
+
+
+@timeit
+def convert_event(eventname, waveform_base, asdf_base):
+    from pyasdf import ASDFDataSet
+    from pypers import Space
+    from obspy import read
+
+    ws = Space(waveform_base)
+    safe_mkdir(obsd_dir)
+
+    with ASDFDataSet(os.path.join(asdf_base, eventname + '.raw_obs.h5'), mode='w', mpi=False, compression=None) as ds:
+        for wav in ws.ls():
+            ds.add_waveforms(read(wav))
