@@ -13,17 +13,18 @@ def download_convert(eventname):
         "networks": ["FR"],
         "channels": None,
         "location_priorities": ["", "00", "10"],
-        "channel_priorities": ["BH[ZNE12]", "HH[ZNE12]"],
+        "channel_priorities": ["BH[ZNE]", "HH[ZNE]"],
         "providers": None
     }
 
-    basedir = "./test_data_repo"
+    basedir = "./eu_data_repo"
     waveform_base = os.path.join(basedir, "waveform")
     station_base = os.path.join(basedir, "station")
     asdf_base = os.path.join(basedir, "asdf")
+    stationfile = os.path.join("CMT/STATIONS.190", 'STATION_' + eventname[1:])
 
     download_event(eventname, event, params, waveform_base, station_base)
-    convert_event(eventname, waveform_base, asdf_base)
+    convert_event(eventname, stationfile, waveform_base, asdf_base)
 
 if __name__ == "__main__":
     download_convert("C201105192015A")

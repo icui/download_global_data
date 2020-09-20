@@ -113,13 +113,21 @@ def download_event(eventname, event, params,
 
 
 @timeit
-def convert_event(eventname, waveform_base, asdf_base):
+def convert_event(eventname, stationfile, waveform_base, asdf_base):
     from pyasdf import ASDFDataSet
     from pypers import Space
     from obspy import read
 
     ws = Space(os.path.join(waveform_base, eventname))
     safe_mkdir(asdf_base)
+    stations = set()
+
+    with open(stationfile, 'r') as f:
+        for line in f.readlines():
+            sta, net = line.split()[:2]
+            stations.add(net + '.' + sta)
+    
+    print(stations)
 
     with ASDFDataSet(os.path.join(asdf_base, eventname + '.raw_obs.h5'), mode='w',
         mpi=False, compression=None) as ds:
