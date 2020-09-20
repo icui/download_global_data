@@ -29,7 +29,6 @@ if __name__ == "__main__":
     download_event(eventname, event, params, waveform_base, station_base)
     ws = Space(waveform_base)
 
-    with ASDFDataSet(os.path.join(asdf_base, event + '.raw_obs.h5'), mode='w', mpi=False, compression=None) as ds:
-        for wav in ws.ls():
-            st = read(wav)
-            ds.add_waveforms(st)
+with ASDFDataSet(os.path.join(asdf_base, eventname + '.raw_obs.h5'), mode='w', mpi=False, compression=None) as ds:
+    for wav in ws.ls():
+        ds.add_waveforms(read(wav))
