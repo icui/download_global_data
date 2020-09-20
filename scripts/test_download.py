@@ -20,6 +20,8 @@ def download_convert(eventname):
             sta, net = line.split()[:2]
             networks.add(net)
             stations.add(net + '.' + sta)
+    
+    print(networks, stations)
 
     params = {
         "starttime_offset": -600,
