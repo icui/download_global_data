@@ -126,8 +126,6 @@ def convert_event(eventname, stationfile, waveform_base, asdf_base):
         for line in f.readlines():
             sta, net = line.split()[:2]
             stations.add(net + '.' + sta)
-    
-    print(stations)
 
     with ASDFDataSet(os.path.join(asdf_base, eventname + '.raw_obs.h5'), mode='w',
         mpi=False, compression=None) as ds:
