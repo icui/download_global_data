@@ -37,8 +37,9 @@ def download_convert(eventname):
 if __name__ == "__main__":
     from mpi4py import MPI
     from pypers import Space
-    
+
     rank = MPI.Comm.Get_rank()
     events = Space('CMT/CMT.190').ls()
-    download_convert(events[rank])
+    print(len(events), rank)
+    # download_convert(events[rank])
     
