@@ -23,7 +23,7 @@ def download_convert(eventname):
     asdf_base = os.path.join(basedir, "asdf")
     stationfile = os.path.join("CMT/STATIONS.190", 'STATION_' + eventname[1:])
 
-    download_event(eventname, event, params, waveform_base, station_base)
+    # download_event(eventname, event, params, waveform_base, station_base)
     convert_event(eventname, stationfile, waveform_base, asdf_base)
 
 if __name__ == "__main__":
