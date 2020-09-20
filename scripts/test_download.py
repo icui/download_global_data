@@ -20,8 +20,6 @@ def download_convert(eventname):
             sta, net = line.split()[:2]
             networks.add(net)
             stations.add(net + '.' + sta)
-    
-    print(networks, stations)
 
     params = {
         "starttime_offset": -600,
@@ -33,7 +31,7 @@ def download_convert(eventname):
         "providers": None
     }
 
-    # download_event(eventname, event, params, waveform_base, station_base)
+    download_event(eventname, event, params, waveform_base, station_base)
     convert_event(eventname, stations, waveform_base, asdf_base)
 
 if __name__ == "__main__":
