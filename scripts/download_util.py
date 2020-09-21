@@ -105,7 +105,7 @@ def download_event(eventname, event, params,
     download_global_data(
         starttime, endtime,
         obsd_dir, stationxml_dir,
-        networks=params["networks"],
+        stations=params["stations"],
         channels=params["channels"],
         location_priorities=params["location_priorities"],
         channel_priorities=params["channel_priorities"],
