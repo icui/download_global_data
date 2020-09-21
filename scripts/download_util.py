@@ -128,4 +128,8 @@ def convert_event(eventname, stations, waveform_base, asdf_base):
             station = '.'.join(wav.split('.')[:2])
 
             if station in stations:
-                ds.add_waveforms(read(ws[wav]), 'raw_obs')
+                try:
+                    ds.add_waveforms(read(ws[wav]), 'raw_obs')
+                
+                except:
+                    pass

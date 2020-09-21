@@ -34,7 +34,7 @@ def download_convert(eventname):
         "providers": None
     }
 
-    download_event(eventname, event, params, waveform_base, station_base)
+    # download_event(eventname, event, params, waveform_base, station_base)
     convert_event(eventname, stations, waveform_base, asdf_base)
 
 
@@ -43,16 +43,16 @@ def download_convert(eventname):
 if __name__ == "__main__":
     from pypers import Space  
 
-    # download_convert('C072096A')
+    download_convert('C072096A')
 
-    ws = Space()
+    # ws = Space()
 
-    for event in ws.ls('CMT/CMT.190'):
-        if not ws.has('eu_data_repo/asdf/' + event + '.raw_obs.h5'):
-            try:
-                download_convert(event)
+    # for event in ws.ls('CMT/CMT.190'):
+    #     if not ws.has('eu_data_repo/asdf/' + event + '.raw_obs.h5'):
+    #         try:
+    #             download_convert(event)
             
-            except:
-                with open('failed.txt', 'a') as f:
-                    f.write(event + '\n')
+    #         except:
+    #             with open('failed.txt', 'a') as f:
+    #                 f.write(event + '\n')
     
