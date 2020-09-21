@@ -34,7 +34,7 @@ def download_convert(eventname):
         "providers": None
     }
 
-    download_event(eventname, event, params, waveform_base, station_base)
+    # download_event(eventname, event, params, waveform_base, station_base)
     convert_event(eventname, stations, waveform_base, asdf_base)
 
 
