@@ -11,7 +11,7 @@ def download_convert(eventname):
     waveform_base = os.path.join(basedir, "waveform")
     station_base = os.path.join(basedir, "station")
     asdf_base = os.path.join(basedir, "asdf")
-    stationfile = os.path.join("CMT/STATIONS.190", 'STATION_' + eventname[1:])
+    stationfile = os.path.join("CMT/STATIONS.190", 'STATION.' + eventname)
     stations = set()
     networks = set()
     stas = set()
