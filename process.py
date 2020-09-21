@@ -11,4 +11,4 @@ dst = 'proc.h5'
 def proc(syn, obs):
     print(syn, obs)
 
-process((syn, obs), dst, proc, 'stream', nprocs=42)
+process((syn, obs), dst, proc, 'stream', nprocs=42).run()
