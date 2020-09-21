@@ -43,6 +43,11 @@ def download_convert(eventname):
 if __name__ == "__main__":
     from pypers import Space  
 
-    for event in Space('CMT/CMT.190').ls():
-        download_convert(event)
+    download_convert('C072096A')
+
+    # ws = Space()
+
+    # for event in ws.ls('CMT/CMT.190'):
+    #     if ws.has('')
+    #     download_convert(event)
     
