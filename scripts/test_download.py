@@ -48,7 +48,11 @@ if __name__ == "__main__":
     ws = Space()
 
     for event in ws.ls('CMT/CMT.190'):
-        if ws.has('eu_data_repo/asdf/' + event + '.raw_obs.h5'):
-            print(event)
-        # download_convert(event)
+        if not ws.has('eu_data_repo/asdf/' + event + '.raw_obs.h5'):
+            try:
+                download_convert(event)
+            
+            except:
+                with open('failed.txt', 'a') as f:
+                    f.write(event + '\n')
     
