@@ -34,7 +34,7 @@ def download_convert(eventname):
         "providers": None
     }
 
-    # download_event(eventname, event, params, waveform_base, station_base)
+    download_event(eventname, event, params, waveform_base, station_base)
     convert_event(eventname, stations, waveform_base, asdf_base)
 
 
@@ -43,11 +43,12 @@ def download_convert(eventname):
 if __name__ == "__main__":
     from pypers import Space  
 
-    download_convert('C072096A')
+    # download_convert('C072096A')
 
-    # ws = Space()
+    ws = Space()
 
-    # for event in ws.ls('CMT/CMT.190'):
-    #     if ws.has('')
-    #     download_convert(event)
+    for event in ws.ls('CMT/CMT.190'):
+        if ws.has('eu_data_repo/waveform/' + event):
+            print(event)
+        # download_convert(event)
     
