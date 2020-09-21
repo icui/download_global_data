@@ -1,5 +1,5 @@
 from pytomo3d.signal import process_stream
-from pypers.io import process
+from pypers.utils import process
 from proc import proc
 
 
