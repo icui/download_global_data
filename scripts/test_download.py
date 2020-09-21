@@ -14,17 +14,20 @@ def download_convert(eventname):
     stationfile = os.path.join("CMT/STATIONS.190", 'STATION_' + eventname[1:])
     stations = set()
     networks = set()
+    stas = set()
     
     with open(stationfile, 'r') as f:
         for line in f.readlines():
             sta, net = line.split()[:2]
             networks.add(net)
+            stas.add(sta)
             stations.add(net + '.' + sta)
 
     params = {
         "starttime_offset": -600,
         "endtime_offset": 11000,
-        "stations": list(stations),
+        "networks": list(networks),
+        "stations": list(stas),
         "channels": None,
         "location_priorities": ["", "00", "10"],
         "channel_priorities": ["BH[ZNE]", "HH[ZNE]"],
@@ -39,7 +42,7 @@ if __name__ == "__main__":
     from pypers import Space  
 
     # rank = MPI.COMM_WORLD.Get_rank()
-    rank = 20
+    rank = 0
     events = Space('CMT/CMT.190').ls()
     print(events[rank])
     download_convert(events[rank])
