@@ -41,11 +41,8 @@ def download_convert(eventname):
 # def process_event(eventname)
 
 if __name__ == "__main__":
-    # from mpi4py import MPI
     from pypers import Space  
 
-    # rank = MPI.COMM_WORLD.Get_rank()
-    rank = -1
-    events = Space('CMT/CMT.190').ls()
-    download_convert(events[rank])
+    for event in Space('CMT/CMT.190').ls():
+        download_convert(event)
     
