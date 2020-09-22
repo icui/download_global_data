@@ -103,9 +103,10 @@ def process_event(event):
     
     if rank == 0:
         with ASDFDataSet(dst, mode='r', mpi=False) as ds:
-            if len(ds.auxiliary_data.selected.list()) > 10:
+            nselected = len(ds.auxiliary_data.selected.list())
+            if nselected > 10:
                 with open('selected.txt', 'a') as f:
-                    f.write(event + '\n')
+                    f.write(event + ' ' + nselected + '\n')
 
 
 for event in Space('CMT/CMT.190').ls():
