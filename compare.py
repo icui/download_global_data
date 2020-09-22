@@ -116,5 +116,5 @@ for event in Space('CMT/CMT.190').ls():
     try:
         process_event(event)
     
-    except:
-        pass
+    except Exception as e:
+        print(e)
