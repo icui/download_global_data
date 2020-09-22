@@ -45,9 +45,22 @@ def process_event(event):
     src_obs = 'raw_obs/' + event + '.raw_obs.h5'
     dst_syn = 'proc_syn/' + event + '.proc_syn.h5'
     dst_obs = 'proc_obs/' + event + '.proc_obs.h5'
+
+    with open('CMT/CMT.190/' + event, 'r') as f:
+        lines = f.readlines()
+
+        flags = {
+            'event_latitude': float(lines[4].split()[-1]),
+            'event_longitude': float(lines[5].split()[-1])}
+
+        obs_flags.update(flags)
+        syn_flags.update(flags)
     
-    process((src_syn, src_obs), dst_syn, process_synthetic, 'stream', output_tag='proc_syn')
-    process((src_syn, src_obs), dst_obs, process_observed, 'stream', output_tag='proc_obs')
+    print(flags)
+        
+    
+    # process((src_syn, src_obs), dst_syn, process_synthetic, 'stream', output_tag='proc_syn')
+    # process((src_syn, src_obs), dst_obs, process_observed, 'stream', output_tag='proc_obs')
 
 
 process_event('C201105192015A')
