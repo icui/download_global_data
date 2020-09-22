@@ -35,19 +35,15 @@ def read_station(event, stream):
     return read_inventory('eu_data_repo/station/' + event + '/' + station + '.xml')
 
 
-def process_observed(event, obs, syn):
+def process_observed(event, syn, obs):
     try:
         traces = [
             obs.select(component='N')[0],
             obs.select(component='E')[0],
             obs.select(component='Z')[0]]
         
-        print(traces[0].stats.starttime)
-        print(traces[1].stats.starttime)
-        print(traces[2].stats.starttime)
-        exit()
-        
         obs = Stream(traces)
+        obs.trim(starttime=syn[0].stats.starttime, endtime=syn[0].stats.endtime)
 
     except:
         exit()
