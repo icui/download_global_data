@@ -42,7 +42,7 @@ syn_flags = {
 
 def process_pair(event, syn, obs):
     sta = syn[0].stats.network + '.' + syn[0].stats.station
-    inv = read_inventory('eu_data_repo/station/' + event + '/' + station + '.xml')
+    inv = read_inventory('eu_data_repo/station/' + event + '/' + sta + '.xml')
     syn = process_stream(syn, inventory=inv, **syn_flags)
 
     try:
