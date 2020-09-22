@@ -33,11 +33,11 @@ syn_flags = {
 
 
 def process_observed(syn, obs):
-    pass
+    return process_stream(obs, **obs_flags)
 
 
 def process_synthetic(syn, obs):
-    pass
+    return process_stream(syn, **syn_flags)
 
 
 def process_event(event):
@@ -55,11 +55,9 @@ def process_event(event):
 
         obs_flags.update(flags)
         syn_flags.update(flags)
-    
-    print(flags)
         
     
-    # process((src_syn, src_obs), dst_syn, process_synthetic, 'stream', output_tag='proc_syn')
+    process((src_syn, src_obs), dst_syn, process_synthetic, 'stream', output_tag='proc_syn')
     # process((src_syn, src_obs), dst_obs, process_observed, 'stream', output_tag='proc_obs')
 
 

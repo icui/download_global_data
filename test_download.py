@@ -38,8 +38,6 @@ def download_convert(eventname):
     convert_event(eventname, stations, waveform_base, asdf_base)
 
 
-# def process_event(eventname)
-
 if __name__ == "__main__":
     from pypers import Space
 
