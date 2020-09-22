@@ -45,6 +45,7 @@ def process_observed(event, syn, obs):
         print(traces[0].stats.starttime)
         print(traces[1].stats.starttime)
         print(traces[2].stats.starttime)
+        exit()
         
         obs = Stream(traces)
 
