@@ -1,6 +1,6 @@
 from functools import partial
 from pytomo3d.signal import process_stream
-from pypers.utils import process
+from pypers.utils import process, AuxiliaryData
 from obspy import read_inventory, Stream
 from scipy.fftpack import fft, fftfreq
 import numpy as np
@@ -44,6 +44,7 @@ def process_pair(event, syn, obs):
     sta = syn[0].stats.network + '.' + syn[0].stats.station
     inv = read_inventory('eu_data_repo/station/' + event + '/' + sta + '.xml')
     syn = process_stream(syn, inventory=inv, **syn_flags)
+    chosen = []
 
     try:
         obs = Stream([
@@ -68,10 +69,14 @@ def process_pair(event, syn, obs):
             ft_obs = fft(obst.data)[fwin]
 
             if np.std(phase(ft_obs / ft_syn)) < 0.4:
-                print(sta, cmp, np.std(phase(ft_obs / ft_syn)))
+                chosen.append(cmp)
 
     except:
         pass
+
+    if len(chosen):
+        return AuxiliaryData(parameters={'components': chosen})
+
 
 def process_event(event):
     src_syn = 'raw_syn/' + event + '.raw_syn.h5'
