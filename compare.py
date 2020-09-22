@@ -36,12 +36,15 @@ def read_station(event, stream):
 
 
 def process_observed(event, syn, obs):
-    obs = Stream([
-        obs.select(component='N')[0],
-        obs.select(component='E')[0],
-        obs.select(component='Z')[0]])
-    
-    print(len(obs))
+    try:
+        obs = Stream([
+            obs.select(component='N')[0],
+            obs.select(component='E')[0],
+            obs.select(component='Z')[0]])
+
+    except:
+        print(len(obs))    
+    # print(len(obs))
     # return process_stream(obs, inventory=read_station(event, obs), **obs_flags)
 
 
