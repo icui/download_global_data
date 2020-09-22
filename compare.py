@@ -35,7 +35,7 @@ def read_station(event, stream):
     return read_inventory('eu_data_repo/station/' + event + '/' + station + '.xml')
 
 
-def process_observed(event, syn, obs):
+def process_observed(event, obs, syn):
     try:
         traces = [
             obs.select(component='N')[0],
