@@ -35,9 +35,9 @@ if __name__ == "__main__":
 
     for event in ws.ls('CMT/CMT.190'):
         if not ws.has('eu_globe/raw_obs/' + event + '.raw_obs.h5'):
-            download_convert(event)
-            # try:
+            try:
+                download_convert(event)
             
-            # except:
-            #     with open('failed.txt', 'a') as f:
-            #         f.write(event + '\n')
+            except:
+                with open('failed.txt', 'a') as f:
+                    f.write(event + '\n')
