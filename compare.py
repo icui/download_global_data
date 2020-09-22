@@ -32,7 +32,7 @@ syn_flags = {
 
 def read_station(event, stream):
     station = stream[0].stats.network + '.' + stream[0].stats.station
-    return read_inventory('eu_data_repo/station/' + station + '.xml')
+    return read_inventory('eu_data_repo/station/' + event + '/' + station + '.xml')
 
 
 def process_observed(event, syn, obs):
