@@ -110,4 +110,8 @@ def process_event(event):
 
 
 for event in Space('CMT/CMT.190').ls():
-    process_event(event)
+    try:
+        process_event(event)
+    
+    except:
+        pass
