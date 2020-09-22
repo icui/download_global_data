@@ -44,32 +44,35 @@ def process_pair(event, syn, obs):
     inv = inventory=read_station(event, obs)
     syn = process_stream(syn, inventory=inv, **syn_flags)
 
-    try:
-        obs = Stream([
-            obs.select(component='N')[0],
-            obs.select(component='E')[0],
-            obs.select(component='Z')[0]])
+    assert syn[0].stats.npts == nt
+    assert syn[0].stats.delta == dt
 
-        obs.trim(starttime=syn[0].stats.starttime)
-        obs.resample(syn[0].stats.sampling_rate)
+    # try:
+    #     obs = Stream([
+    #         obs.select(component='N')[0],
+    #         obs.select(component='E')[0],
+    #         obs.select(component='Z')[0]])
 
-        for tr in obs:
-            if tr.stats.npts > nt:
-                tr.data = tr.data[:nt]
+    #     obs.trim(starttime=syn[0].stats.starttime)
+    #     obs.resample(syn[0].stats.sampling_rate)
+
+    #     for tr in obs:
+    #         if tr.stats.npts > nt:
+    #             tr.data = tr.data[:nt]
             
-            elif tr.stats.npts < nt:
-                print('???')
+    #         elif tr.stats.npts < nt:
+    #             print('???')
 
 
-        obs = process_stream(obs, inv, **obs_flags)
+    #     obs = process_stream(obs, inv, **obs_flags)
 
-        # for cmp in ('R', 'T', 'Z'):
-        #     synt = syn.select(component=cmp)[0]
-        #     obst = obs.select(component=cmp)[0]
+    #     # for cmp in ('R', 'T', 'Z'):
+    #     #     synt = syn.select(component=cmp)[0]
+    #     #     obst = obs.select(component=cmp)[0]
 
 
-    except:
-        pass
+    # except:
+    #     pass
 
 def process_event(event):
     src_syn = 'raw_syn/' + event + '.raw_syn.h5'
