@@ -82,6 +82,6 @@ from time import time
 rank = MPI.COMM_WORLD.Get_rank()
 
 start = time()
-# process_event('C201105192015A')
+process_event('C201105192015A')
 if rank == 0:
     print(f'{time()-start:.2f}s')
