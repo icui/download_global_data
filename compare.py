@@ -7,6 +7,9 @@ from pyasdf import ASDFDataSet
 import numpy as np
 import cmath
 
+from mpi4py import MPI
+from time import time
+rank = MPI.COMM_WORLD.Get_rank()
 
 nt = 36160
 dt = 0.2
@@ -96,14 +99,12 @@ def process_event(event):
         
     process((src_syn, src_obs), dst, partial(process_pair, event), 'stream', output_tag='selected')
     
-    with ASDFDataSet(dst, mode='r', mpi=False) as ds:
-        if len(ds.auxiliary_data.selected.list()) > 10:
-            with open('selected.txt', 'a') as f:
-                f.write(event + '\n')
+    if rank == 0:
+        with ASDFDataSet(dst, mode='r', mpi=False) as ds:
+            if len(ds.auxiliary_data.selected.list()) > 10:
+                with open('selected.txt', 'a') as f:
+                    f.write(event + '\n')
 
-from mpi4py import MPI
-from time import time
-rank = MPI.COMM_WORLD.Get_rank()
 
 start = time()
 process_event('C201105192015A')
