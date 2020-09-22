@@ -128,8 +128,4 @@ for event in ws.ls('CMT/CMT.190'):
         print('timeout')
         break
 
-    try:
-        process_event(event)
-    
-    except Exception as e:
-        print(e)
+    process_event(event)
