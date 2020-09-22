@@ -37,6 +37,7 @@ def read_station(event, stream):
 
 def process_pair(event, syn, obs):
     inv = inventory=read_station(event, obs)
+    syn = process_stream(syn, inventory=inv, **syn_flags)
 
     try:
         obs = Stream([
@@ -45,15 +46,10 @@ def process_pair(event, syn, obs):
             obs.select(component='Z')[0]])
 
         obs.trim(starttime=syn[0].stats.starttime, endtime=syn[0].stats.endtime)
+        obs = process_stream(obs, inv, **obs_flags)
 
     except:
         pass
-    
-    else:
-        obs = process_stream(obs, inv, **obs_flags)
-
-    syn = process_stream(syn, inventory=inv, **syn_flags)
-
 
 def process_event(event):
     src_syn = 'raw_syn/' + event + '.raw_syn.h5'
