@@ -36,7 +36,7 @@ def read_station(event, stream):
 
 
 def process_observed(event, syn, obs):
-    return process_stream(obs, **obs_flags)
+    return process_stream(obs, inventory=read_station(event, obs), **obs_flags)
 
 
 def process_synthetic(event, syn, obs):
@@ -60,8 +60,8 @@ def process_event(event):
         syn_flags.update(flags)
         
     
-    process((src_syn, src_obs), dst_syn, partial(process_synthetic, event), 'stream', output_tag='proc_syn')
-    # process((src_syn, src_obs), dst_obs, partial(process_observed, event), 'stream', output_tag='proc_obs')
+    # process((src_syn, src_obs), dst_syn, partial(process_synthetic, event), 'stream', output_tag='proc_syn')
+    process((src_syn, src_obs), dst_obs, partial(process_observed, event), 'stream', output_tag='proc_obs')
 
 
 process_event('C201105192015A')
