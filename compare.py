@@ -40,13 +40,9 @@ syn_flags = {
 }
 
 
-def read_station(event, stream):
-    station = stream[0].stats.network + '.' + stream[0].stats.station
-    return read_inventory('eu_data_repo/station/' + event + '/' + station + '.xml')
-
-
 def process_pair(event, syn, obs):
-    inv = inventory=read_station(event, obs)
+    sta = syn[0].stats.network + '.' + syn[0].stats.station
+    inv = read_inventory('eu_data_repo/station/' + event + '/' + station + '.xml')
     syn = process_stream(syn, inventory=inv, **syn_flags)
 
     try:
@@ -71,7 +67,8 @@ def process_pair(event, syn, obs):
             ft_syn = fft(synt.data)[fwin]
             ft_obs = fft(obst.data)[fwin]
 
-            print(np.std(phase(ft_obs / ft_syn)))
+            if np.std(phase(ft_obs / ft_syn)) < 0.4:
+                print(sta, cmp)
 
     except:
         pass
