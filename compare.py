@@ -33,7 +33,9 @@ def process_observed(syn, obs):
 
 
 def process_synthetic(syn, obs):
-    return process_stream(syn, **syn_flags)
+    station = syn[0].stats.network + '.' + syn[0].stats.station
+    print(station)
+    # return process_stream(syn, **syn_flags)
 
 
 def process_event(event):
