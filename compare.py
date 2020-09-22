@@ -1,5 +1,6 @@
 from functools import partial
 from pytomo3d.signal import process_stream
+from pypers import Space
 from pypers.utils import process, AuxiliaryData
 from obspy import read_inventory, Stream
 from scipy.fftpack import fft, fftfreq
@@ -106,7 +107,5 @@ def process_event(event):
                     f.write(event + '\n')
 
 
-start = time()
-process_event('C201105192015A')
-if rank == 0:
-    print(f'{time()-start:.2f}s')
+for event in Space('CMT/CMT.190').ls():
+    print(event)
