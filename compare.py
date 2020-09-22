@@ -99,14 +99,13 @@ def process_event(event):
         syn_flags.update(flags)
         
     process((src_syn, src_obs), dst, partial(process_pair, event), 'stream', output_tag='selected')
+    MPI.COMM_WORLD.Barrier()
     
     if rank == 0:
         with ASDFDataSet(dst, mode='r', mpi=False) as ds:
             if len(ds.auxiliary_data.selected.list()) > 10:
                 with open('selected.txt', 'a') as f:
                     f.write(event + '\n')
-
-    MPI.COMM_WORLD.Barrier()
 
 
 for event in Space('CMT/CMT.190').ls():
