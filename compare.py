@@ -43,7 +43,7 @@ def process_observed(event, syn, obs):
             obs.select(component='Z')[0]])
 
     except:
-        print(len(obs))    
+        print(len(obs), len(obs.select(component='Z')))    
     # print(len(obs))
     # return process_stream(obs, inventory=read_station(event, obs), **obs_flags)
 
