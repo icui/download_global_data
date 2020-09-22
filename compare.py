@@ -40,9 +40,7 @@ def process_observed(event, syn, obs):
 
 
 def process_synthetic(event, syn, obs):
-    
-    print(read_station(event, syn))
-    # return process_stream(syn, **syn_flags)
+    return process_stream(syn, inventory=read_station(event, syn), **syn_flags)
 
 
 def process_event(event):
