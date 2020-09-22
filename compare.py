@@ -50,6 +50,7 @@ def process_pair(event, syn, obs):
             obs.select(component='E')[0],
             obs.select(component='Z')[0]])
 
+        obs.trim(starttime=syn[0].stats.starttime)
         obs.resample(syn[0].stats.sampling_rate)
 
         for tr in obs:
