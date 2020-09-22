@@ -7,27 +7,17 @@ def download_convert(eventname):
     eventfile = os.path.join("CMT/CMT.190", eventname)
     event = obspy.read_events(eventfile)[0]
 
-    basedir = "./eu_data_repo"
+    basedir = "./eu_globe"
     waveform_base = os.path.join(basedir, "waveform")
     station_base = os.path.join(basedir, "station")
-    asdf_base = os.path.join(basedir, "asdf")
-    stationfile = os.path.join("CMT/STATIONS.190", 'STATION.' + eventname)
-    stations = set()
-    networks = set()
-    stas = set()
+    asdf_base = os.path.join(basedir, "raw_obs")
     
-    with open(stationfile, 'r') as f:
-        for line in f.readlines():
-            sta, net = line.split()[:2]
-            networks.add(net)
-            stas.add(sta)
-            stations.add(net + '.' + sta)
 
     params = {
         "starttime_offset": -600,
         "endtime_offset": 11000,
-        "networks": list(networks),
-        "stations": list(stas),
+        "networks": None,
+        "stations": None,
         "channels": None,
         "location_priorities": ["", "00", "10"],
         "channel_priorities": ["BH[ZNE]", "HH[ZNE]"],
@@ -35,7 +25,7 @@ def download_convert(eventname):
     }
 
     download_event(eventname, event, params, waveform_base, station_base)
-    convert_event(eventname, stations, waveform_base, asdf_base)
+    convert_event(eventname, waveform_base, station_base, asdf_base)
 
 
 if __name__ == "__main__":
@@ -44,11 +34,12 @@ if __name__ == "__main__":
     ws = Space()
 
     for event in ws.ls('CMT/CMT.190'):
-        if not ws.has('eu_data_repo/asdf/' + event + '.raw_obs.h5'):
+        if not ws.has('eu_globe/raw_obs/' + event + '.raw_obs.h5'):
             try:
                 download_convert(event)
             
             except:
                 with open('failed.txt', 'a') as f:
                     f.write(event + '\n')
-    
+            
+            break

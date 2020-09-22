@@ -114,10 +114,10 @@ def download_event(eventname, event, params,
 
 
 @timeit
-def convert_event(eventname, stations, waveform_base, asdf_base):
+def convert_event(eventname, waveform_base, station_base, asdf_base):
     from pyasdf import ASDFDataSet
     from pypers import Space
-    from obspy import read
+    from obspy import read, read_inventory
 
     ws = Space(os.path.join(waveform_base, eventname))
     safe_mkdir(asdf_base)
@@ -127,9 +127,9 @@ def convert_event(eventname, stations, waveform_base, asdf_base):
         for wav in ws.ls():
             station = '.'.join(wav.split('.')[:2])
 
-            if station in stations:
-                try:
-                    ds.add_waveforms(read(ws[wav]), 'raw_obs')
-                
-                except:
-                    pass
+            try:
+                ds.add_waveforms(read(ws[wav]), 'raw_obs')
+                ds.add_stationxml(os.path.join(asdf_base, eventname, station + '.xml'))
+            
+            except:
+                pass
