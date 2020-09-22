@@ -1,6 +1,5 @@
 from pytomo3d.signal import process_stream
 from pypers.utils import process
-from proc import proc
 
 
 event = 'C201105192015A'
@@ -9,4 +8,8 @@ obs = 'raw_obs/' + event + '.raw_obs.h5'
 dst = 'proc.h5'
 
 
-process((syn, obs), dst, proc, 'stream').run()
+def proc(syn, obs):
+    print(len(syn), len(obs))
+
+
+process((syn, obs), dst, proc, 'stream')

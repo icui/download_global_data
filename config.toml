@@ -1,5 +1,0 @@
-system = "summit"
-name = "loop"
-nnodes = 1
-walltime = 300.0
-account = "GEO111"
