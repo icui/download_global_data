@@ -124,7 +124,12 @@ def convert_event(eventname, waveform_base, station_base, asdf_base):
 
     with ASDFDataSet(os.path.join(asdf_base, eventname + '.raw_obs.h5'), mode='w',
         mpi=False, compression=None) as ds:
-        ds.add_quakeml('CMT/CMT.190/' + eventname)
+        try:
+            ds.add_quakeml('CMT/CMT.190/' + eventname)
+        
+        except Exception as e:
+            print(e)
+            
         stations = set()
 
         for wav in ws.ls():
