@@ -41,5 +41,3 @@ if __name__ == "__main__":
             except:
                 with open('failed.txt', 'a') as f:
                     f.write(event + '\n')
-            
-            break
