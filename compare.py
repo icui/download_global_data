@@ -133,5 +133,3 @@ for event in ws.ls('CMT/CMT.190'):
     
     except Exception as e:
         print(e)
-    
-    break
