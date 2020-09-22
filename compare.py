@@ -104,11 +104,9 @@ def process_event(event):
     if rank == 0:
         with ASDFDataSet(dst, mode='r', mpi=False) as ds:
             nselected = len(ds.auxiliary_data.selected.list())
-            print('???????????', nselected, nselected > 10)
 
             if nselected > 10:
                 with open('selected.txt', 'a') as f:
-                    print('>>>>>>>', event + ' ' + nselected + '\n')
                     f.write(f'{event} {nselected}\n')
 
 
