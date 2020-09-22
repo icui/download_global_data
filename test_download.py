@@ -1,5 +1,6 @@
 import os
 import obspy
+from sys import argv
 from download_util import download_event, convert_event
 
 
@@ -33,7 +34,10 @@ if __name__ == "__main__":
 
     ws = Space()
 
-    for event in ws.ls('CMT/CMT.190'):
+    for i, event in enumerate(ws.ls('CMT/CMT.190')):
+        if i % 10 != int(argv[1]):
+            continue
+        
         if not ws.has('eu_globe/raw_obs/' + event + '.raw_obs.h5'):
             try:
                 download_convert(event)
