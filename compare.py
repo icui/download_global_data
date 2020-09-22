@@ -72,8 +72,6 @@ def process_pair(event, syn, obs):
 
     except:
         pass
-    
-    return obs
 
 def process_event(event):
     src_syn = 'raw_syn/' + event + '.raw_syn.h5'
