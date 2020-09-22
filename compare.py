@@ -106,6 +106,8 @@ def process_event(event):
                 with open('selected.txt', 'a') as f:
                     f.write(event + '\n')
 
+    MPI.COMM_WORLD.Barrier()
+
 
 for event in Space('CMT/CMT.190').ls():
-    print(event)
+    process_event(event)
