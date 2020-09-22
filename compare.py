@@ -32,29 +32,27 @@ syn_flags = {
 
 def read_station(event, stream):
     station = stream[0].stats.network + '.' + stream[0].stats.station
-    print(station)
     return read_inventory('eu_data_repo/station/' + event + '/' + station + '.xml')
 
 
-def process_observed(event, syn, obs):
+def process_pair(event, syn, obs):
+    inv = inventory=read_station(event, obs)
+
     try:
-        traces = [
+        obs = Stream([
             obs.select(component='N')[0],
             obs.select(component='E')[0],
-            obs.select(component='Z')[0]]
-        
-        obs = Stream(traces)
+            obs.select(component='Z')[0]])
+
         obs.trim(starttime=syn[0].stats.starttime, endtime=syn[0].stats.endtime)
 
     except:
         pass
     
     else:
-        return process_stream(obs, inventory=read_station(event, obs), **obs_flags)
+        obs = process_stream(obs, inv, **obs_flags)
 
-
-def process_synthetic(event, syn, obs):
-    return process_stream(syn, inventory=read_station(event, syn), **syn_flags)
+    syn = process_stream(syn, inventory=inv, **syn_flags)
 
 
 def process_event(event):
@@ -75,7 +73,7 @@ def process_event(event):
         
     
     # process((src_syn, src_obs), dst_syn, partial(process_synthetic, event), 'stream', output_tag='proc_syn')
-    process((src_syn, src_obs), dst_obs, partial(process_observed, event), 'stream', output_tag='proc_obs')
+    process((src_syn, src_obs), dst_obs, partial(process_pair, event), 'stream', output_tag='proc_obs')
 
 from mpi4py import MPI
 from time import time
