@@ -1,6 +1,7 @@
 from functools import partial
 from pytomo3d.signal import process_stream
 from pypers.utils import process
+from obspy import read_inventory
 
 
 obs_flags = {
@@ -29,13 +30,18 @@ syn_flags = {
 }
 
 
+def read_station(event, stream):
+    station = stream[0].stats.network + '.' + stream[0].stats.station
+    return read_inventory('eu_data_repo/station/' + station + '.xml')
+
+
 def process_observed(event, syn, obs):
     return process_stream(obs, **obs_flags)
 
 
 def process_synthetic(event, syn, obs):
-    station = syn[0].stats.network + '.' + syn[0].stats.station
-    print(event, station)
+    
+    print(read_station(event, syn))
     # return process_stream(syn, **syn_flags)
 
 
