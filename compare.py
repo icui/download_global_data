@@ -108,7 +108,7 @@ def process_event(event):
             if nselected > 10:
                 with open('selected.txt', 'a') as f:
                     print('>>>>>>>', event + ' ' + nselected + '\n')
-                    f.write(event + ' ' + nselected + '\n')
+                    f.write(f'{event} {nselected}\n')
 
 
 for event in Space('CMT/CMT.190').ls():
