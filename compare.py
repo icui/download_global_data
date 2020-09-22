@@ -68,7 +68,7 @@ def process_pair(event, syn, obs):
             ft_obs = fft(obst.data)[fwin]
 
             if np.std(phase(ft_obs / ft_syn)) < 0.4:
-                print(sta, cmp)
+                print(sta, cmp, np.std(phase(ft_obs / ft_syn)))
 
     except:
         pass
@@ -78,8 +78,7 @@ def process_pair(event, syn, obs):
 def process_event(event):
     src_syn = 'raw_syn/' + event + '.raw_syn.h5'
     src_obs = 'raw_obs/' + event + '.raw_obs.h5'
-    dst_syn = 'proc_syn/' + event + '.proc_syn.h5'
-    dst_obs = 'proc_obs/' + event + '.proc_obs.h5'
+    dst = 'std/' + event + '.std.h5'
 
     with open('CMT/CMT.190/' + event, 'r') as f:
         lines = f.readlines()
@@ -91,7 +90,7 @@ def process_event(event):
         obs_flags.update(flags)
         syn_flags.update(flags)
         
-    process((src_syn, src_obs), dst_obs, partial(process_pair, event), 'stream', output_tag='proc_obs')
+    process((src_syn, src_obs), dst, partial(process_pair, event), 'stream', output_tag='proc_obs')
 
 from mpi4py import MPI
 from time import time
