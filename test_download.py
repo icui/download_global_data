@@ -16,7 +16,7 @@ def download_convert(eventname):
     params = {
         "starttime_offset": -600,
         "endtime_offset": 11000,
-        "networks": ["FR"],
+        "networks": None,
         "stations": None,
         "channels": None,
         "location_priorities": ["", "00", "10"],
