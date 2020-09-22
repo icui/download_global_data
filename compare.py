@@ -77,5 +77,11 @@ def process_event(event):
     # process((src_syn, src_obs), dst_syn, partial(process_synthetic, event), 'stream', output_tag='proc_syn')
     process((src_syn, src_obs), dst_obs, partial(process_observed, event), 'stream', output_tag='proc_obs')
 
+from mpi4py import MPI
+from time import time
+rank = MPI.COMM_WORLD.Get_rank()
 
-process_event('C201105192015A')
+start = time()
+# process_event('C201105192015A')
+if rank == 0:
+    print(f'{time()-start:.2f}s')
