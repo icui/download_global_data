@@ -44,35 +44,30 @@ def process_pair(event, syn, obs):
     inv = inventory=read_station(event, obs)
     syn = process_stream(syn, inventory=inv, **syn_flags)
 
-    assert syn[0].stats.npts == nt
-    assert syn[0].stats.delta == dt
+    try:
+        obs = Stream([
+            obs.select(component='N')[0],
+            obs.select(component='E')[0],
+            obs.select(component='Z')[0]])
 
-    # try:
-    #     obs = Stream([
-    #         obs.select(component='N')[0],
-    #         obs.select(component='E')[0],
-    #         obs.select(component='Z')[0]])
+        obs.trim(starttime=syn[0].stats.starttime)
+        obs.resample(syn[0].stats.sampling_rate)
 
-    #     obs.trim(starttime=syn[0].stats.starttime)
-    #     obs.resample(syn[0].stats.sampling_rate)
+        for tr in obs:
+            if tr.stats.npts > nt:
+                tr.data = tr.data[:nt]
 
-    #     for tr in obs:
-    #         if tr.stats.npts > nt:
-    #             tr.data = tr.data[:nt]
-            
-    #         elif tr.stats.npts < nt:
-    #             print('???')
+        obs = process_stream(obs, inv, **obs_flags)
 
-
-    #     obs = process_stream(obs, inv, **obs_flags)
-
-    #     # for cmp in ('R', 'T', 'Z'):
-    #     #     synt = syn.select(component=cmp)[0]
-    #     #     obst = obs.select(component=cmp)[0]
+        # for cmp in ('R', 'T', 'Z'):
+        #     synt = syn.select(component=cmp)[0]
+        #     obst = obs.select(component=cmp)[0]
 
 
-    # except:
-    #     pass
+    except:
+        pass
+    
+    return obs
 
 def process_event(event):
     src_syn = 'raw_syn/' + event + '.raw_syn.h5'
@@ -90,8 +85,6 @@ def process_event(event):
         obs_flags.update(flags)
         syn_flags.update(flags)
         
-    
-    # process((src_syn, src_obs), dst_syn, partial(process_synthetic, event), 'stream', output_tag='proc_syn')
     process((src_syn, src_obs), dst_obs, partial(process_pair, event), 'stream', output_tag='proc_obs')
 
 from mpi4py import MPI
