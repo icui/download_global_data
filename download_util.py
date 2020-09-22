@@ -117,19 +117,19 @@ def download_event(eventname, event, params,
 def convert_event(eventname, waveform_base, station_base, asdf_base):
     from pyasdf import ASDFDataSet
     from pypers import Space
-    from obspy import read, read_inventory
+    from obspy import read, read_inventory, read_events
 
     ws = Space(os.path.join(waveform_base, eventname))
     safe_mkdir(asdf_base)
 
     with ASDFDataSet(os.path.join(asdf_base, eventname + '.raw_obs.h5'), mode='w',
         mpi=False, compression=None) as ds:
-        try:
-            ds.add_quakeml('CMT/CMT.190/' + eventname)
+        ds.add_quakeml(read_events('CMT/CMT.190/' + eventname))
+        # try:
         
-        except Exception as e:
-            print(e)
-            
+        # except Exception as e:
+        #     print(e)
+
         stations = set()
 
         for wav in ws.ls():
@@ -144,7 +144,7 @@ def convert_event(eventname, waveform_base, station_base, asdf_base):
         
         for station in stations:
             try:
-                ds.add_stationxml(os.path.join(asdf_base, eventname, station + '.xml'))
+                ds.add_stationxml(os.path.join(station_base, eventname, station + '.xml'))
             
             except Exception as e:
                 print(e)
