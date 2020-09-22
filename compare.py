@@ -46,6 +46,7 @@ def process_observed(event, syn, obs):
         obs.trim(starttime=syn[0].stats.starttime, endtime=syn[0].stats.endtime)
 
     except:
+        print(123)
         pass
     
     else:
