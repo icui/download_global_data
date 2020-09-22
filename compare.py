@@ -3,6 +3,7 @@ from pytomo3d.signal import process_stream
 from pypers.utils import process, AuxiliaryData
 from obspy import read_inventory, Stream
 from scipy.fftpack import fft, fftfreq
+from pyasdf import ASDFDataSet
 import numpy as np
 import cmath
 
@@ -93,13 +94,11 @@ def process_event(event):
         obs_flags.update(flags)
         syn_flags.update(flags)
         
-    process((src_syn, src_obs), dst, partial(process_pair, event), 'stream', output_tag='proc_obs')
+    process((src_syn, src_obs), dst, partial(process_pair, event), 'stream', output_tag='selected')
+    
+    with ASDFDataSet(dst, mode='r', mpi=False) as ds:
+        if len(ds.auxiliary_data.selected.list()) > 10:
+            with open('selected.txt', 'a') as f:
+                f.write(event + '\n')
 
-from mpi4py import MPI
-from time import time
-rank = MPI.COMM_WORLD.Get_rank()
-
-start = time()
 process_event('C201105192015A')
-if rank == 0:
-    print(f'{time()-start:.2f}s')
