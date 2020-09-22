@@ -1,3 +1,4 @@
+from functools import partial
 from pytomo3d.signal import process_stream
 from pypers.utils import process
 
@@ -28,13 +29,13 @@ syn_flags = {
 }
 
 
-def process_observed(syn, obs):
+def process_observed(event, syn, obs):
     return process_stream(obs, **obs_flags)
 
 
-def process_synthetic(syn, obs):
+def process_synthetic(event, syn, obs):
     station = syn[0].stats.network + '.' + syn[0].stats.station
-    print(station)
+    print(event, station)
     # return process_stream(syn, **syn_flags)
 
 
@@ -55,8 +56,8 @@ def process_event(event):
         syn_flags.update(flags)
         
     
-    process((src_syn, src_obs), dst_syn, process_synthetic, 'stream', output_tag='proc_syn')
-    # process((src_syn, src_obs), dst_obs, process_observed, 'stream', output_tag='proc_obs')
+    process((src_syn, src_obs), dst_syn, partial(process_synthetic, event), 'stream', output_tag='proc_syn')
+    # process((src_syn, src_obs), dst_obs, partial(process_observed, event), 'stream', output_tag='proc_obs')
 
 
 process_event('C201105192015A')
