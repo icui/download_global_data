@@ -37,10 +37,17 @@ def read_station(event, stream):
 
 def process_observed(event, syn, obs):
     try:
-        obs = Stream([
+        traces = [
             obs.select(component='N')[0],
             obs.select(component='E')[0],
-            obs.select(component='Z')[0]])
+            obs.select(component='Z')[0]]
+        
+        print(traces[0].stats.starttime)
+        print(traces[1].stats.starttime)
+        print(traces[2].stats.starttime)
+        exit()
+        
+        obs = Stream(traces)
 
     except:
         pass
