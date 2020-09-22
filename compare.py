@@ -3,10 +3,15 @@ from pytomo3d.signal import process_stream
 from pypers.utils import process
 from obspy import read_inventory, Stream
 from scipy.fftpack import fft, fftfreq
+import numpy as np
+import cmath
 
 
 nt = 36160
 dt = 0.2
+freq = fftfreq(nt, dt)
+fwin = np.squeeze(np.where((freq > 1/100) & (freq < 1/40)))
+phase = np.vectorize(cmath.phase)
 
 
 obs_flags = {
@@ -59,10 +64,14 @@ def process_pair(event, syn, obs):
 
         obs = process_stream(obs, inv, **obs_flags)
 
-        # for cmp in ('R', 'T', 'Z'):
-        #     synt = syn.select(component=cmp)[0]
-        #     obst = obs.select(component=cmp)[0]
+        for cmp in ('R', 'T', 'Z'):
+            synt = syn.select(component=cmp)[0]
+            obst = obs.select(component=cmp)[0]
 
+            ft_syn = fft(synt.data)[fwin]
+            ft_obs = fft(obst.data)[fwin]
+
+            print(np.std(phase(ft_obs / ft_syn)))
 
     except:
         pass
