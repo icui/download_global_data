@@ -2,6 +2,11 @@ from functools import partial
 from pytomo3d.signal import process_stream
 from pypers.utils import process
 from obspy import read_inventory, Stream
+from scipy.fftpack import fft, fftfreq
+
+
+nt = 36160
+dt = 0.2
 
 
 obs_flags = {
@@ -46,7 +51,22 @@ def process_pair(event, syn, obs):
             obs.select(component='Z')[0]])
 
         obs.trim(starttime=syn[0].stats.starttime, endtime=syn[0].stats.endtime)
+        obs.resample(syn[0].stats.sampling_rate)
+
+        for tr in obs:
+            if tr.stats.npts > nt:
+                tr.data = tr.data[:nt]
+            
+            elif tr.stats.npts < nt:
+                print('???')
+
+
         obs = process_stream(obs, inv, **obs_flags)
+
+        # for cmp in ('R', 'T', 'Z'):
+        #     synt = syn.select(component=cmp)[0]
+        #     obst = obs.select(component=cmp)[0]
+
 
     except:
         pass
