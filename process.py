@@ -5,9 +5,9 @@ from pyasdf import ASDFDataSet
 
 rank = MPI.COMM_WORLD.Get_rank()
 
-def proc(stream):
-    stream.filter('lowpass', freq=1/40)
-    return stream
+def proc(trace):
+    trace.filter('lowpass', freq=1/40)
+    return trace
 
 
 start = time()
