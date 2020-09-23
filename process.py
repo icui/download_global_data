@@ -5,12 +5,13 @@ from pyasdf import ASDFDataSet
 
 rank = MPI.COMM_WORLD.Get_rank()
 
+
 def proc(trace):
     trace.filter('lowpass', freq=1/40)
     return trace
 
 
 start = time()
-process('syn.h5', 'out.h5', process)
+process('syn.h5', 'out.h5', proc)
 if rank == 0:
     print(f'{time()-start:.2f}s')
